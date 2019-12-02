@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ import org.ghsa.coolweather.android.gson.Weather;
 import org.ghsa.coolweather.android.util.HttpUtil;
 import org.ghsa.coolweather.android.util.Utility;
 import org.jetbrains.annotations.NotNull;
-import org.litepal.util.BaseUtility;
 
 import java.io.IOException;
 
@@ -214,6 +214,9 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startActivity(intent);
     }
 
 }
+
