@@ -2,6 +2,7 @@ package org.ghsa.coolweather;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import org.ghsa.coolweather.android.util.HttpUtil;
 import org.ghsa.coolweather.android.util.Utility;
 import org.jetbrains.annotations.NotNull;
 import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +35,11 @@ import okhttp3.Response;
 
 public class ChooseAreaFragment extends Fragment {
 
+    private static final String TAG = "ChooseAreaFragment";
+
     private static final int LEVEL_PROVINCE = 0;
 
-    private static final int LEVEL_CITY = 0;
+    private static final int LEVEL_CITY = 1;
 
     private static final int LEVEL_COUNTY = 2;
 
@@ -101,6 +103,7 @@ public class ChooseAreaFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onActivityCreated->onItemClick");
                 if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(position);
                     queryCities();
@@ -113,6 +116,7 @@ public class ChooseAreaFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "setOnClickListener->onClick");
                 if (currentLevel == LEVEL_COUNTY) {
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
@@ -161,7 +165,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china" + provinceCode;
+            String address = "http://guolin.tech/api/china/" + provinceCode;
             queryFromServer(address, "city");
         }
     }
